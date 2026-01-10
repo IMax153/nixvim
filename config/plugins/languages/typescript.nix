@@ -1,4 +1,16 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  oxlintWrapper = pkgs.writeShellScript "oxlint-wrapper" ''
+    # Check for local oxlint installation
+    LOCAL_OXLINT="$PWD/node_modules/.bin/oxlint"
+
+    if [ -x "$LOCAL_OXLINT" ]; then
+      exec "$LOCAL_OXLINT" "$@"
+    else
+      exec ${lib.getExe pkgs.unstable.oxlint} "$@"
+    fi
+  '';
+in
 {
   extraPackages = with pkgs; [
     nodejs_24
@@ -9,8 +21,21 @@
       enable = true;
     };
 
+    dprint = {
+      enable = true;
+    };
+
     eslint = {
       enable = true;
+    };
+
+    oxlint = {
+      enable = true;
+      package = pkgs.unstable.oxlint;
+      cmd = [
+        "${oxlintWrapper}"
+        "--lsp"
+      ];
     };
   };
 
