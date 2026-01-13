@@ -12,6 +12,94 @@ let
   '';
 in
 {
+  autoGroups = {
+    oxlint_fix = {
+      clear = true;
+    };
+  };
+
+  autoCmd = [
+    {
+      desc = "Run oxlint --fix on save";
+      event = [ "BufWritePost" ];
+      group = "oxlint_fix";
+      pattern = [
+        "*.js"
+        "*.jsx"
+        "*.ts"
+        "*.tsx"
+        "*.mjs"
+        "*.cjs"
+        "*.mts"
+        "*.cts"
+      ];
+      callback = {
+        __raw =
+          # lua
+          ''
+            function(args)
+              if vim.g.disable_oxlint_fix or vim.b[args.buf].disable_oxlint_fix then
+                return
+              end
+
+              local filepath = vim.api.nvim_buf_get_name(args.buf)
+              if filepath == "" then return end
+
+              vim.fn.jobstart(
+                { "${oxlintWrapper}", "--fix", filepath },
+                {
+                  on_exit = function(_, exit_code)
+                    if exit_code == 0 then
+                      vim.schedule(function()
+                        if vim.api.nvim_buf_is_valid(args.buf) then
+                          vim.api.nvim_buf_call(args.buf, function()
+                            vim.cmd("checktime")
+                          end)
+                        end
+                      end)
+                    end
+                  end,
+                }
+              )
+            end
+          '';
+      };
+    }
+  ];
+
+  userCommands = {
+    "OxlintFixEnable" = {
+      desc = "Enable oxlint fix on save";
+      command = {
+        __raw =
+          # lua
+          ''
+            function()
+              vim.b.disable_oxlint_fix = false
+              vim.g.disable_oxlint_fix = false
+            end
+          '';
+      };
+    };
+    "OxlintFixDisable" = {
+      desc = "Disable oxlint fix on save";
+      bang = true;
+      command = {
+        __raw =
+          # lua
+          ''
+            function(args)
+              if args.bang then
+                vim.b.disable_oxlint_fix = true
+              else
+                vim.g.disable_oxlint_fix = true
+              end
+            end
+          '';
+      };
+    };
+  };
+
   extraPackages = with pkgs; [
     nodejs_24
   ];
