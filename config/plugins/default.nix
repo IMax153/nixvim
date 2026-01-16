@@ -5,6 +5,7 @@
     ./blink.nix
     ./comment.nix
     ./conform.nix
+    ./git-worktree.nix
     ./gitsigns.nix
     ./lint.nix
     ./lsp.nix
