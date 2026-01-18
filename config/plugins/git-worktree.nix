@@ -22,7 +22,15 @@ in
   keymaps = [
     {
       mode = "n";
-      key = "<leader>gwn";
+      key = "<leader>gw";
+      action = ''<cmd>lua require("git-worktree.snacks").worktrees()<cr>'';
+      options = {
+        desc = "List [G]it [W]orktrees (Picker)";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>gwc";
       action = ''<cmd>lua require("git-worktree.snacks").create_worktree()<cr>'';
       options = {
         desc = "[G]it [W]orktree [N]ew";
