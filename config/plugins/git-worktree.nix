@@ -6,8 +6,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "IMax153";
       repo = "git-worktree.nvim";
-      rev = "441e7ec7ae7a8f85a1effdae7386042d9ded776a";
-      hash = "sha256-d5OGPNCnlbt6MbWNGNxI4EwAfiJaI0Yd1tFsSC/T2Ws=";
+      rev = "9c74076839ce8149f1af54639e800f20fc9289a2";
+      hash = "sha256-Lf4yUZ8ETItcb8Rur1vrMk9VFce15srTsDFuAdehncA=";
     };
     doCheck = false;
     meta = with lib; {
