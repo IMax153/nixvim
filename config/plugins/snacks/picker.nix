@@ -65,6 +65,9 @@
       };
     };
     sources = {
+      files = {
+        hidden = true;
+      };
       projects = {
         confirm = {
           __raw =

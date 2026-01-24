@@ -70,11 +70,11 @@
       };
 
       float = {
-        padding = 2;
-        maxWidth = 0;
-        maxHeight = 0;
+        padding = 4;
+        max_width = 0.6;
+        max_height = 0.7;
         border = "rounded";
-        winOptions = {
+        win_options = {
           winblend = 0;
         };
       };
