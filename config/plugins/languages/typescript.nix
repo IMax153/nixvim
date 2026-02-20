@@ -117,6 +117,11 @@ in
       enable = true;
     };
 
+    oxfmt = {
+      enable = true;
+      package = pkgs.unstable.oxfmt;
+    };
+
     oxlint = {
       enable = true;
       package = pkgs.unstable.oxlint;
