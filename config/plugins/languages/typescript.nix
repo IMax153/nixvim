@@ -111,7 +111,7 @@ in
 
     dprint = {
       enable = true;
-      extraOptions.single_file_support = false;
+      extraOptions.workspace_required = true;
     };
 
     eslint = {
