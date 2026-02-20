@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 {
   extraPackages = with pkgs; [
-    nixfmt-rfc-style
+    nixfmt
   ];
 
   plugins = {
@@ -21,7 +21,7 @@
               expr = "import ${flake}.inputs.nixpkgs { }";
             };
             formatting = {
-              command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
+              command = [ "${lib.getExe pkgs.nixfmt}" ];
             };
             options = {
               nixvim.expr = ''${flakeNixvim}.packages.${pkgs.system}.default.options'';
