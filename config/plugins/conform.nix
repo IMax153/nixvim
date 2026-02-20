@@ -60,7 +60,8 @@
       formatters_by_ft =
         let
           js_common = {
-            __unkeyed-1 = "biome";
+            __unkeyed-1 = "oxfmt";
+            __unkeyed-2 = "biome";
             stop_after_first = true;
           };
         in
@@ -68,6 +69,7 @@
           javascript = js_common;
           javascriptreact = js_common;
           typescript = js_common;
+          typescriptreact = js_common;
         };
     };
   };
