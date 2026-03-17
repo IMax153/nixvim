@@ -1,5 +1,12 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 let
+  effectTsgo = inputs.effect-tsgo.packages.${pkgs.system}.effect-tsgo;
+
   oxlintWrapper = pkgs.writeShellScript "oxlint-wrapper" ''
     # Check for local oxlint installation
     LOCAL_OXLINT="$PWD/node_modules/.bin/oxlint"
@@ -133,51 +140,48 @@ in
     };
   };
 
-  plugins.typescript-tools = {
+  plugins.lsp.servers.tsgo = {
     enable = true;
+    package = effectTsgo;
+    cmd = [
+      "${effectTsgo}/bin/tsgo"
+      "--lsp"
+      "--stdio"
+    ];
     settings = {
-      separate_diagnostic_server = true;
-      publish_diagnostic_on = "insert_leave";
-      complete_function_calls = true;
-      include_completions_with_insert_text = true;
-      code_lens = "off";
-      disable_member_code_lens = true;
-      jsx_close_tag = {
-        enable = true;
-        filetypes = [
-          "javascriptreact"
-          "typescriptreact"
-        ];
+      javascript.inlayHints = {
+        enumMemberValues.enabled = false;
+        functionLikeReturnTypes.enabled = false;
+        parameterNames = {
+          enabled = "literals";
+          suppressWhenArgumentMatchesName = false;
+        };
+        parameterTypes.enabled = false;
+        propertyDeclarationTypes.enabled = false;
+        variableTypes = {
+          enabled = false;
+          suppressWhenTypeMatchesName = false;
+        };
       };
 
-      # Tsserver Settings
-      tsserver_max_memory = 12288;
-      tsserver_file_preferences = {
-        includeInlayParameterNameHints = "literals";
-        includeInlayParameterNameHintsWhenArgumentMatchesName = false;
-        includeInlayVariableTypeHints = false;
-        includeInlayVariableTypeHintsWhenTypeMatchesName = false;
-        includeInlayPropertyDeclarationTypeHints = false;
-        includeInlayFunctionParameterTypeHints = false;
-        includeInlayEnumMemberValueHints = false;
-        includeInlayFunctionLikeReturnTypeHints = false;
-      };
-      tsserver_format_options = {
-        insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true;
-        semicolons = "ignore";
-      };
-
-      # Disable auto-formatting through the Typescript LSP
-      on_attach = {
-        __raw =
-          # lua
-          ''
-            function(client)
-              client.server_capabilities.documentFormattingProvider = false
-              client.server_capabilities.documentRangeFormattingProvider = false
-            end
-          '';
+      typescript.inlayHints = {
+        enumMemberValues.enabled = false;
+        functionLikeReturnTypes.enabled = false;
+        parameterNames = {
+          enabled = "literals";
+          suppressWhenArgumentMatchesName = false;
+        };
+        parameterTypes.enabled = false;
+        propertyDeclarationTypes.enabled = false;
+        variableTypes = {
+          enabled = false;
+          suppressWhenTypeMatchesName = false;
+        };
       };
     };
+    onAttach.function = ''
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+    '';
   };
 }

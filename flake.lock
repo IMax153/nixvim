@@ -1,5 +1,30 @@
 {
   "nodes": {
+    "effect-tsgo": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgsUnstable": [
+          "nixpkgs"
+        ],
+        "typescript-go-src": "typescript-go-src",
+        "typescript-src": "typescript-src"
+      },
+      "locked": {
+        "lastModified": 1773684471,
+        "narHash": "sha256-cCdiPH5PgAfW5dbI7agMnaZDBjsHIbQAaSQsjHD1kyg=",
+        "owner": "Effect-TS",
+        "repo": "tsgo",
+        "rev": "25f84248de67fedaddfc583f4c71d956fad040c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Effect-TS",
+        "repo": "tsgo",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -124,6 +149,7 @@
     },
     "root": {
       "inputs": {
+        "effect-tsgo": "effect-tsgo",
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
@@ -160,6 +186,40 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "typescript-go-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773347135,
+        "narHash": "sha256-6Kdhu3hR/GPLMl+vNDHzRh+8zzmmpzfgxgjxAUPI9nE=",
+        "owner": "microsoft",
+        "repo": "typescript-go",
+        "rev": "417cc2007438c6b6fc610e44a60f2415416e96e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "microsoft",
+        "repo": "typescript-go",
+        "rev": "417cc2007438c6b6fc610e44a60f2415416e96e1",
+        "type": "github"
+      }
+    },
+    "typescript-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772506970,
+        "narHash": "sha256-qxZXsu81U3iZguCpHDCN47oghOE9LnAXkVxz3FNrTqY=",
+        "owner": "microsoft",
+        "repo": "TypeScript",
+        "rev": "2a3bed2b4265fa1173c88771a21ce044e6480f75",
+        "type": "github"
+      },
+      "original": {
+        "owner": "microsoft",
+        "repo": "TypeScript",
+        "rev": "2a3bed2b4265fa1173c88771a21ce044e6480f75",
         "type": "github"
       }
     }
