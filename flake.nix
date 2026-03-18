@@ -2,11 +2,6 @@
   description = "My personal Neovim configuration built with Nixvim";
 
   inputs = {
-    effect-tsgo = {
-      url = "github:Effect-TS/tsgo";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgsUnstable.follows = "nixpkgs";
-    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixvim.url = "github:nix-community/nixvim";
     flake-parts.url = "github:hercules-ci/flake-parts";

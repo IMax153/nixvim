@@ -1,12 +1,9 @@
 {
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
-  effectTsgo = inputs.effect-tsgo.packages.${pkgs.system}.effect-tsgo;
-
   oxlintWrapper = pkgs.writeShellScript "oxlint-wrapper" ''
     # Check for local oxlint installation
     LOCAL_OXLINT="$PWD/node_modules/.bin/oxlint"
@@ -15,6 +12,16 @@ let
       exec "$LOCAL_OXLINT" "$@"
     else
       exec ${lib.getExe pkgs.unstable.oxlint} "$@"
+    fi
+  '';
+
+  tsgoWrapper = pkgs.writeShellScript "tsgo-wrapper" ''
+    LOCAL_TSGO="$PWD/node_modules/.bin/tsgo"
+
+    if [ -x "$LOCAL_TSGO" ]; then
+      exec "$LOCAL_TSGO" "$@"
+    else
+      exec ${lib.getExe pkgs.typescript-go} "$@"
     fi
   '';
 in
@@ -142,12 +149,23 @@ in
 
   plugins.lsp.servers.tsgo = {
     enable = true;
-    package = effectTsgo;
+    package = pkgs.typescript-go;
     cmd = [
-      "${effectTsgo}/bin/tsgo"
+      "${tsgoWrapper}"
       "--lsp"
       "--stdio"
     ];
+    extraOptions.root_dir = lib.nixvim.mkRaw ''
+      function(bufnr, on_dir)
+        local root = vim.fs.root(bufnr, {
+          { "tsconfig.json", "jsconfig.json" },
+          { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" },
+          { ".git" },
+        })
+
+        on_dir(root or vim.fn.getcwd())
+      end
+    '';
     settings = {
       javascript.inlayHints = {
         enumMemberValues.enabled = false;

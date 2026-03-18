@@ -49,7 +49,7 @@
                 return
               end
               return {
-                lsp_format = "prefer",
+                lsp_format = "fallback",
                 stop_after_first = true,
                 timeout_ms = 500,
                 async = true,

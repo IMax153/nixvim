@@ -1,4 +1,4 @@
 # nixvim
 
-- TypeScript uses Effect's `tsgo` for all JS/TS projects.
-- Effect repos should add `compilerOptions.plugins = [{ "name": "@effect/language-service" }]` to `tsconfig.json` to enable the embedded Effect language service.
+- TypeScript uses `tsgo` for all JS/TS projects.
+- Project-local `node_modules/.bin/tsgo` overrides the Nix fallback when present, and should provide its own `node` runtime.
