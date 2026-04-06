@@ -15,6 +15,7 @@
     ./mini.nix
     ./oil.nix
     ./snacks
+    ./spectre.nix
     ./tmux-navigator.nix
     ./treesitter.nix
     ./web-devicons.nix
