@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.typescript;
-  tsserverPath = "${pkgs.typescript}/lib/node_modules/typescript/lib/tsserver.js";
 
   oxlintWrapper = pkgs.writeShellScript "oxlint-wrapper" ''
     # Check for local oxlint installation
@@ -130,6 +129,7 @@ in
 
     extraPackages = with pkgs; [
       nodejs_24
+      typescript
     ];
 
     plugins.lsp.servers = {
@@ -248,7 +248,6 @@ in
           };
 
           tsserver_max_memory = 12288;
-          tsserver_path = tsserverPath;
           tsserver_file_preferences = {
             includeInlayParameterNameHints = "literals";
             includeInlayParameterNameHintsWhenArgumentMatchesName = false;
