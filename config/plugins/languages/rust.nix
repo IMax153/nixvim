@@ -6,13 +6,13 @@
       cmd = [ "rust-analyzer" ];
       settings = {
         cargo = {
-          target = "x86_64-unknown-linux-gnu";
+          target = "x86_64-unknown-linux-musl";
           targetDir = true;
         };
         check = {
           command = "check";
           allTargets = false;
-          targets = [ "x86_64-unknown-linux-gnu" ];
+          targets = [ "x86_64-unknown-linux-musl" ];
         };
       };
 
